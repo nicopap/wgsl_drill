@@ -1,14 +1,14 @@
-# Shader conditional binding
+# Drill Naga Oil WGSL bindings
 
-This parses a subset of naga-oil's WGSL to gather bindings used by various
-shader combinations.
+Analyze `#define` usages in your WGSL files and print bindings conditionally
+enabled on `#ifdef FOO`.
 
 ## How to use
 
 Example:
 
 ```sh
-shader_conditional_bindings -s prepass.wgsl -d SKINNED path/to/bevy/repo
+wgsl_drill -s prepass.wgsl -d SKINNED path/to/bevy/repo
 ```
 
 <details><summary><h3>Sample outputs</h3></summary>
@@ -42,7 +42,7 @@ group(1) binding(1) var sprite_sampler: sampler;
 Full description
 
 ```
-Usage: shader_conditional_bindings [OPTIONS] [SOURCE_DIRECTORIES]...
+Usage: wgsl_drill [OPTIONS] [SOURCE_DIRECTORIES]...
 
 Arguments:
  [SOURCE_DIRECTORIES]...
@@ -72,8 +72,12 @@ Notably:
 
 - The `#ifdef`, `#else`, `#define_import_path`, `#import` CPP-like (C pre-processor)
   statements
-- The WGSL standard line & block comments
+- The WGSL line & block comments
 - top-level resource variable declaration with a `group(x) binding(y)` attributes
 
 We construct a rudimentary AST of all of those, and go through it, checking if
 defines are available etc. We also read imports inline and conditionally.
+
+## License
+
+The code is licensed under MPL 2.0, see the license file for details.
